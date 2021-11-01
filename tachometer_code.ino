@@ -1,4 +1,4 @@
-int encoder_pin = 2;  // The pin the encoder is connected           
+int encoder_pin = 2;  // The interrupt pin          
 unsigned int rpm;     // rpm reading
 volatile byte pulses;  // number of pulses
 unsigned long timeold; 
@@ -35,12 +35,11 @@ void setup()
  
   //Don't process interrupts during calculations
    detachInterrupt(0);
-   //Note that this would be 60*1000/(millis() - timeold)*pulses if the interrupt
-   //happened once per revolution
-//   rpm = (60 * 1000 / pulsesperturn )/ (millis() - timeold)* pulses;
+   
    rpm = pulses * 60;
    timeold = millis();
-   pulses = 0;
+    
+   pulses = 0; // reset the pulse count
    
    //Write it out to serial port
    Serial.print("RPM = ");
